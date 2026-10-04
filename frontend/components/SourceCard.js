@@ -1,0 +1,1 @@
+function SourceCard(m){return `<div class="src"><div class="hd">${I('shield')}Based on Policy</div><dl><dt>Document</dt><dd>${esc(m.d)}</dd><dt>Section</dt><dd>${esc(m.s)}</dd><dt>Page</dt><dd>${m.p}</dd><dt>Relevance</dt><dd>${m.c}%<div class="meter"><i style="width:${m.c}%"></i></div></dd></dl></div>`}

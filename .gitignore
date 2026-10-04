@@ -1,0 +1,8 @@
+backend/.env
+backend/*.db
+vectorstore/*
+!vectorstore/.gitkeep
+documents/policies/*
+!documents/policies/.gitkeep
+__pycache__/
+.venv/

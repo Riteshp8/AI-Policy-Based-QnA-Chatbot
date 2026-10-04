@@ -1,0 +1,25 @@
+from fastapi import FastAPI
+from fastapi.middleware.cors import CORSMiddleware
+from fastapi.staticfiles import StaticFiles
+
+from app.core.config import settings
+from app.database.database import Base, engine
+from app.routes import auth, chat, policies
+
+Base.metadata.create_all(bind=engine)
+
+app = FastAPI(title="PolicyMind API")
+app.add_middleware(CORSMiddleware, allow_origins=settings.cors_origins, allow_credentials=True,
+                   allow_methods=["*"], allow_headers=["*"])
+app.include_router(auth.router, prefix="/api/auth", tags=["auth"])
+app.include_router(policies.router, prefix="/api/policies", tags=["policies"])
+app.include_router(chat.router, prefix="/api/chat", tags=["chat"])
+
+
+@app.get("/api/health")
+def health():
+    return {"status": "ok"}
+
+
+# Serves the frontend at http://127.0.0.1:8000 (keep last so /api routes win)
+app.mount("/", StaticFiles(directory=settings.frontend_dir, html=True), name="frontend")
